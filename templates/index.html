@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Success Predictor</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    /* Add margin for better spacing */
+    margin-bottom: 20px;
+}
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Success Predictor</h1>
+        <form id="predictionForm">
+        <!-- Input fields for each feature -->
+        <div class="form-group">
+            <label for="firstTermGPA">First Term GPA:</label>
+            <input type="number" id="firstTermGPA" name="firstTermGPA" step="0.01">
+        </div>
+        <div class="form-group">
+            <label for="secondTermGPA">Second Term GPA:</label>
+            <input type="number" id="secondTermGPA" name="secondTermGPA" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label for="firstLanguage">First Language:</label>
+            <select id="firstLanguage" name="First Language">
+                <option value = "1">English</option>
+                <option value ="2">French</option>
+                <option value ="3">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="funding">Funding:</label>
+            <select id="funding" name="Funding">
+                <option value ="1">None</option>
+                <option value ="2">Scholarship</option>
+                <option value ="3">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="school">School:</label>
+            <select id="school" name="School">
+                <option value ="1">Science</option>
+                <option value ="2">Business</option>
+                <option value ="3">Arts</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fastTrack">FastTrack:</label>
+            <select id="fastTrack" name="FastTrack">
+                <option value ="1">Yes</option>
+                <option value ="2">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="coop">Coop:</label>
+            <select id="coop" name="Coop">
+                <option value ="1">Yes</option>
+                <option value ="2">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="residency">Residency:</label>
+            <select id="residency" name="Residency">
+                <option value ="1">Domestic</option>
+                <option value ="2">International</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="Gender">
+                <option value ="1">Male</option>
+                <option value ="2">Female</option>
+                <option value ="3">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="previousEducation">Previous Education:</label>
+            <select id="previousEducation" name="Previous Education">
+                <option value ="1">High School</option>
+                <option value ="2">College</option>
+                <option value ="3">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ageGroup">Age:</label>
+            <input type="text" id="ageGroup" name="ageGroup">
+        </div>
+        <div class="form-group">
+            <label for="highSchoolAverage">High School Average Mark:</label>
+            <input type="number" id="highSchoolAverage" name="highSchoolAverage" step="0.01">
+        </div>
+        <div class="form-group">
+            <label for="mathScore">Math Score:</label>
+            <input type="number" id="mathScore" name="mathScore" step="0.01">
+        </div>
+        <div class="form-group">
+            <label for="englishGrade">English Grade:</label>
+            <input type="number" id="englishGrade" name="englishGrade" step="0.01">
+        </div>
+        <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Gather data from form
+            let formData = {
+            firstTermGPA: parseFloat(document.getElementById('firstTermGPA').value),
+            secondTermGPA: parseFloat(document.getElementById('secondTermGPA').value),
+            firstLanguage: document.getElementById('firstLanguage').value,
+            funding: document.getElementById('funding').value,
+            school: document.getElementById('school').value,
+            fastTrack: document.getElementById('fastTrack').value,
+            coop: document.getElementById('coop').value,
+            residency: document.getElementById('residency').value,
+            gender: document.getElementById('gender').value,
+            previousEducation: document.getElementById('previousEducation').value,
+            ageGroup: document.getElementById('ageGroup').value,
+            highSchoolAverage: parseFloat(document.getElementById('highSchoolAverage').value),
+            mathScore: parseFloat(document.getElementById('mathScore').value),
+            englishGrade: parseFloat(document.getElementById('englishGrade').value)
+        };
+
+            // Send data to Flask backend
+    fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        let predictionText = '';
+        if (data.prediction === 1) {
+            predictionText = 'Prediction: Success';
+        } else {
+            predictionText = 'Prediction: Not Success';
+        }
+        document.getElementById('result').innerText = predictionText;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        document.getElementById('result').innerText = 'Error: Unable to make a prediction.';
+    });
+});
+    </script>
+</body>
+</html>
